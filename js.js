@@ -23,6 +23,28 @@ $('.wrapper').each(function() {
       $activeDot.addClass('active'); 
     }); 
   
+    var touchstartX = 0;
+var touchendX = 0;
+
+$('.wrapper').on('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+});
+
+$('.wrapper').on('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    handleGesture();
+});
+
+function handleGesture() {
+    if (touchendX < touchstartX) {
+        nextSlide(); // Свайп влево - переключаем на следующий слайд
+    }
+
+    if (touchendX > touchstartX) {
+        prevSlide(); // Свайп вправо - переключаем на предыдущий слайд
+    }
+}
+
     $nextBtn.on('click', function(event) { 
       nextSlide(); 
     }); 
