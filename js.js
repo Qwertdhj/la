@@ -21,18 +21,26 @@ $('.wrapper').each(function() {
     startX = touch.clientX;
 });
 
-$slider.on('touchmove', function(e) {
-    e.preventDefault();
-    var touch = e.originalEvent.touches[0];
-    var currentX = touch.clientX;
-    var deltaX = currentX - startX;
+$slider.on('wheel', function(e) { 
+    if (!canScroll) { 
+        return; // Если прокрутка заблокирована, выходим из обработчика 
+    } 
 
-    if (deltaX < 0) {
-        prevSlide();
-    } else {
-        nextSlide();
-    }
-});
+    e.preventDefault(); // Отменяем стандартное поведение прокрутки страницы 
+
+    if (e.originalEvent.deltaY < 0) { 
+        prevSlide(); // Прокрутка вверх 
+    } else { 
+        nextSlide(); // Прокрутка вниз 
+    } 
+
+    canScroll = false; // Блокируем возможность прокрутки 
+    setTimeout(function() { 
+        canScroll = true; // Через 2 секунды разблокируем прокрутку 
+    }, 2000); 
+}); 
+
+
 
 
   $slider.on('slide.changed', function() { 
