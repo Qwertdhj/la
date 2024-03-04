@@ -14,7 +14,26 @@ $('.wrapper').each(function() {
       var slideToGo = $(this).data('slide'); 
       goToSlide(slideToGo); 
     }); 
-  
+  $slider.on('touchstart', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0];
+    startX = touch.clientX;
+});
+
+$slider.on('touchmove', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0];
+    var currentX = touch.clientX;
+    var deltaX = currentX - startX;
+
+    if (deltaX < 0) {
+        prevSlide();
+    } else {
+        nextSlide();
+    }
+});
+
+
     $slider.on('slide.changed', function() { 
       console.log('slide changed !'); 
       $('.nav-dot').removeClass('active'); 
