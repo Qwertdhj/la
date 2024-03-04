@@ -20,6 +20,12 @@ $('.wrapper').each(function() {
     startX = touch.clientX;
 });
 
+$slider.on('touchstart', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0];
+    startX = touch.clientX;
+});
+
 $slider.on('touchmove', function(e) {
     e.preventDefault();
     var touch = e.originalEvent.touches[0];
@@ -32,6 +38,7 @@ $slider.on('touchmove', function(e) {
         nextSlide();
     }
 });
+
 
 
     $slider.on('slide.changed', function() { 
